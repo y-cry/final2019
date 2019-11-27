@@ -1,7 +1,7 @@
 ---
-title: "Aides Drug"
-author: "Put your name here!"
-date: "put the date here"
+title: "Aids Drug"
+author: "Savannah Johnson"
+date: "11/20/19"
 output: html_document
 ---
 
@@ -9,19 +9,41 @@ output: html_document
 require(tidyverse)
 require(tigerstats)
 avast <-read.csv(file="avastivironal.csv",header=TRUE)
+avastf <- filter(avast,sex=="gal")
+avastg <- filter(avast,LGBTQ=="gay")
+avastm <- filter(avast,sex=="guy")
+avasts <- filter(avast,LGBTQ=="straight")
+avastd <- filter(avast,DrugUser=="yes")
+
 ```
 
 # Introduction
 
 <!--In this section you explain what you are trying to show.  Where did the data come from?  What is the research or other question you are trying to answer?.  If you skimp in this section expect to be marked down in your grade. Paint a picture of the project a couple of paragraphs is expected!-->
 
-A new  preventative aides (abacavirinol) is under test in clinical trials. Analyze the effectiveness of this drug across the board. Consider population subgroups by gender, drug use, and sexual orientation. Finish this!
+A new  preventative aides (abacavirinol) is under test in clinical trials. Analyze the effectiveness of this drug across the board. Consider population subgroups by gender, drug use, and sexual orientation. Finish this! 
+
+Instructions: We are going to have 5 different pie square test, one for everybody, one for females, one for males, one for gays,and one for straight indviduals. 
+In the readme section on github you need to explain that you are going to do five different reports, to make five different cases in each of the reports. 
+ 
+Question: Determine how the drug should be working with respect to each subgroup. 
+
+##  1. Everyone
+
+ How do we determine how the drug should be working with respect to the infected and the treatment group?
+ 
+ \(H_0\):There is no difference in the indivduals who are infected to AIDS and to those independent of their subgroup.
+
+\(H_A\):There is a statistical difference between the indivuals who a are infected to AIDS and to those independent to their subgroup.
+
 
 # Methods
 
+We will be using both graphical descriptive and numerical descriptive results.
+
 <!--Decide on your methods:  use "variable analysis" or other appropriate descriptors.  Make sure to choose at least one graphical method and at least one numerical method. Discuss what data manipulations may be needed for example subsetting or other binning procedures and what sort of graphical displays and inferential tools will be used!-->
 
-#Results
+#Results  
 
 <!--Divide this section into two sub-sections:  One for your descriptive  results and one for your inferential results.!-->
 
@@ -31,15 +53,392 @@ A new  preventative aides (abacavirinol) is under test in clinical trials. Analy
 
 <!--Graphical results here.  Make sure to show your code.  Provide appropriate labels for axes, giving units if possible, and provide a good title for the graph, too.  Use the graphical results to describe the patterns if any that exist in the data as focused toward the research question. Bottom line is to explain the features of the graph that are relevant to conforming or departing to what is expected by your null hypothesis !-->
 
+
+```{r}
+barchartGC(~infected + treatment,data=avast,type="percent")
+```
+ 
+The data shows Everyone taking the AID preventive drug 40% contracted AIDS and those taking the placebo 60% contracted AIDS. 
+
+On the left side of the graph it shows that the data for Everyone who did not contract AIDS while taking the Aids preventive drug was 50%, and those taking the placebo is 52%.
+
+The pill is reducing the odds of getting aids.
+
+```AIDS PREVENTIVE DRUG
 ### Numerical Descriptive Results
 
 <!--Numerical results go here. Use the numerical results to describe the patterns if any that exist in the data as focused toward the research question!-->
+
+```{r}
+table1 <- xtabs(~infected + treatment , data=avast)
+rowPerc(table1)
+colPerc(table1)
+```
+
+The drug is effective because for those taking the Aid preventive drug only 41% contracted AIDS, while those taking the placebo were 59% contracted AIDS. The Aids preventive drug gives the individuals a higer chance of not contrcating AIDS. 
+
+For those indivduals that did not contract AIDS, the data is 50/50. For those taking the drug and placebo. There wasn't a significant difference. 
 
 ## Inferential Results
 
 <!--State hypothesis clearly.  Make sure your discussion of the inferential test covers all the aspects that the test output produces, such as test statistic, p-value etc.  Make a decision about the null hypothesis, explain the assumptions on which the selected test/procedure was based, and why the chosen procedure satisfys the assumptions and is appropriate to answer the research question!-->
 
+```{r}
+chisq.test(table1)
+chisqtestGC(table1)
+```
+
+The drug is effective due to a large majority of individuals that did not contract AIDS.
+
+Those infected:504.15+530.85=1035
+
+Those not infected:10086.85+10621.15=30,794
+
+Total effectiveness:10086.85+504.15=10086.85/10590.85=95%
+
+Out of the total who took the drug results showed 95% effectivness.
+
+
+##  2. Women
+
+<!--In this section you explain what you are trying to show.  Where did the data come from?  What is the research or other question you are trying to answer?!-->
+
+In question 2 our goal is to determine how the AID preventive drug should be working with respect to the sex of the women. 
+
+ \(H_0\):There is no difference in the AID preventive drug that is independent to the sex of women.
+
+\(H_A\):There is a statistical difference between AID preventive drug and to those independent to the sex of the women. 
+
+
+
+
+## Methods
+
+<!--Decide on your methods:  use "variable analysis" or other appropriate descriptors.  Make sure to choose at least one graphical method and at least one numerical method.!-->
+
+##Results
+
+<!--Divide this section into two sub-sections:  One for your descriptive  results and one for your inferential results.!-->
+
+We will be using both graphical descriptive and numerical descriptive results.
+
+### Descriptive Results
+
+
+#### Graphical Descriptive Results
+
+<!--Graphical results here.  Make sure to show your code.  Provide appropriate labels for axes, giving units if possible, and provide a good title for the graph, too.  Use the graphical results to describe the patterns if any that exist in the data as focused toward the research question!-->
+
+We use bar charts to compare Numerical vs Numerical data.
+
+```{r}
+barchartGC(~infected + treatment,data=avastf,type="percent")
+```
+
+The data shows of the Women taking the AID preventive drug 35% contracted AIDS and those taking the placebo 65% contracted AIDS. 
+
+On the left side of the graph it shows that data for the Men who did not contract AIDS while taking the Aids preventive drug and that was 50% and those taking the placebo are 48%.
+
+#### Numerical Descriptive Results
+
+<!--Numerical results go here. Use the numerical results to describe the patterns if any that exist in the data as focused toward the research question!-->
+```{r}
+table1 <- xtabs(~infected + treatment, data=avastf)
+rowPerc(table1)
+colPerc(table1)
+```
+
+The drug is effective because for those taking the Aid preventive drug, only 31% contracted AIDS, while those taking the placebo 69% contracted AIDS. The Aids preventive drug gives the individuals a higher chance of not contracting AIDS.
+
+For those indivduals that didnt contract AIDS, the data is 50/50 for those taking the drug and placebo. There wasn't a significant difference. 
+
+### Inferential Results
+
+<!--State hypothesis clearly.  Make sure your discussion of the inferential test covers all the aspects that the test output produces, such as test statistic, p-value etc.  Make a decision about the null hypothesis, explain the assumptions on which the selected test/procedure was based, and why the chosen procedure satisfys the assumptions and is appropriate to answer the research question!-->
+```{r}
+chisq.test(table1)
+chisqtestGC(table1)
+```
+
+The drug is effective due to a large majority of individuals that did not contract AIDS.
+
+Those infected:332.85+345.15=678
+
+Those not infected:4564.15+4732.85=9297
+
+Total effectiveness: 4564.15+332.85=4564.15/4897=93%
+
+Out of the total who took the drug results showed 93% effectivness.
+
+#  3. Men
+
+<!--In this section you explain what you are trying to show.  Where did the data come from?  What is the research or other question you are trying to answer?!-->
+
+In question 3 our goal is to determine how the AID preventive drug should be working with respect to the sex of the males. 
+
+ \(H_0\):There is no difference in the AID preventive drug that is independent to the sex of the men.
+
+\(H_A\):There is a statistical difference between AID preventive drug and to those independent to the sex of the men. 
+
+## Methods
+
+<!--Decide on your methods:  use "variable analysis" or other appropriate descriptors.  Make sure to choose at least one graphical method and at least one numerical method.!-->
+
+##Results
+
+<!--Divide this section into two sub-sections:  One for your descriptive  results and one for your inferential results.!-->
+
+We will be using both graphical descriptive and numerical descriptive results.
+
+### Descriptive Results
+
+#### Graphical Descriptive Results
+
+<!--Graphical results here.  Make sure to show your code.  Provide appropriate labels for axes, giving units if possible, and provide a good title for the graph, too.  Use the graphical results to describe the patterns if any that exist in the data as focused toward the research question!-->
+
+We use bar charts to compare Numerical vs Numerical data.
+
+```{r}
+barchartGC(~infected+ treatment,data=avastm,type="percent")
+```
+
+The data shows that Men taking the AID preventive drug are 60% contracted with AIDS and those taking the placebo are 40% contracted with AIDS. 
+
+On the left side of the graph it shows that data for the Men who did not contract AIDS while taking the Aids preventive drug and that was 45%.T hose taking the placebo are 50%.
+#### Numerical Descriptive Results
+
+<!--Numerical results go here. Use the numerical results to describe the patterns if any that exist in the data as focused toward the research question!-->
+```{r}
+table1 <- xtabs(~infected + treatment, data=avastm)
+rowPerc(table1)
+colPerc(table1)
+```
+
+The drug is effective because for those taking the Aid preventive drug only 59% contracted AIDS, while those taking the placebo 41% contracted AIDS. The Aids preventive drug gives the individuals a higer chance of not contrcating AIDS.
+
+### Inferential Results
+
+<!--State hypothesis clearly.  Make sure your discussion of the inferential test covers all the aspects that the test output produces, such as test statistic, p-value etc.  Make a decision about the null hypothesis, explain the assumptions on which the selected test/procedure was based, and why the chosen procedure satisfys the assumptions and is appropriate to answer the research question!-->
+```{r}
+chisq.test(table1)
+chisqtestGC(table1)
+```
+
+The drug is effective due to a large majority of indviduals that did not contract AIDS.
+
+Those infected:172.74+184.26=357
+
+Those not infected:5521.26+5889.74=11,411
+
+Total effectiveness: 5521.26+172.74=5521.26/5694=97%
+
+Out of the total who took the drug results showed 97% effectivness.
+
+##  4. Gay Individuals
+
+<!--In this section you explain what you are trying to show.  Where did the data come from?  What is the research or other question you are trying to answer?!-->
+
+In question 3 our goal is to determine how the AID preventive drug should be working with respect to gay indivduals. 
+
+\(H_0\):There is no difference in the AID preventive drug that is independent to the LGBTQ of gay indivduals.
+
+\(H_A\):There is a statistical difference between AID preventive drug and to those independent to the LGBTQ of gay indivduals. 
+
+## Methods
+
+<!--Decide on your methods:  use "variable analysis" or other appropriate descriptors.  Make sure to choose at least one graphical method and at least one numerical method.!-->
+
+##Results
+
+<!--Divide this section into two sub-sections:  One for your descriptive  results and one for your inferential results.!-->
+
+We will be using both graphical descriptive and numerical descriptive results.
+
+### Descriptive Results
+
+#### Graphical Descriptive Results
+
+<!--Graphical results here.  Make sure to show your code.  Provide appropriate labels for axes, giving units if possible, and provide a good title for the graph, too.  Use the graphical results to describe the patterns if any that exist in the data as focused toward the research question!-->
+
+We use bar charts to compare Numerical vs Numerical data.
+
+```{r}
+barchartGC(~infected + treatment,data=avastg,type="percent")
+```
+
+Of the gay individuals the data suggest that the people who took the drug, 70% contracted aids while only 30% who took the placebo contracted AIDS. 
+
+On the right side of the graph it shows that gay individuals AIDS preventive drug, 50% did not contract AIDS, and those taking the placebo, 55% did not contract AIDS. 
+We can conclude the drug is effective.
+#### Numerical Descriptive Results
+
+<!--Numerical results go here. Use the numerical results to describe the patterns if any that exist in the data as focused toward the research question!-->
+```{r}
+table1 <- xtabs(~infected + treatment, data=avastg)
+rowPerc(table1)
+colPerc(table1)
+
+```
+
+It states 72% of those who took the AIDS preventive drug contracted AIDS and while those who took the placebo only 28% contracted AIDS.
+### Inferential Results
+
+<!--State hypothesis clearly.  Make sure your discussion of the inferential test covers all the aspects that the test output produces, such as test statistic, p-value etc.  Make a decision about the null hypothesis, explain the assumptions on which the selected test/procedure was based, and why the chosen procedure satisfys the assumptions and is appropriate to answer the research question!-->
+```{r}
+chisq.test(table1)
+chisqtestGC(table1)
+```
+
+The drug is effective due to a large majority of individuals did not contract Aids.
+
+Those infected: 52.69+52.31=105
+
+Those not infected:1020.31+1022.69=2043
+
+Total effectiveness:1030.31+52.69=1030.31/1083=95%
+
+Out of the total who took the drug results showed 95% effectivness.
+
+#   5. Straight Individuals
+
+<!--In this section you explain what you are trying to show.  Where did the data come from?  What is the research or other question you are trying to answer?!-->
+
+In question 5 our goal is to determine how the AID preventive drug should be working with respect to each straight individual.
+
+\(H_0\):There is no difference in the AID preventive drug that is independent to the LGBTQ of the straight individuals.
+
+\(H_A\):There is a statistical difference between AID preventive drug and to those independent to the LGBTQ of the straight individuals. 
+
+## Methods
+
+<!--Decide on your methods:  use "variable analysis" or other appropriate descriptors.  Make sure to choose at least one graphical method and at least one numerical method.!-->
+
+##Results
+
+<!--Divide this section into two sub-sections:  One for your descriptive  results and one for your inferential results.!-->
+
+We will be using both graphical descriptive and numerical descriptive results.
+
+### Descriptive Results
+
+
+
+#### Graphical Descriptive Results
+
+<!--Graphical results here.  Make sure to show your code.  Provide appropriate labels for axes, giving units if possible, and provide a good title for the graph, too.  Use the graphical results to describe the patterns if any that exist in the data as focused toward the research question!-->
+
+We use bar charts to compare Numerical vs Numerical data.
+
+```{r}
+barchartGC(~infected + treatment,data=avasts,type="percent")
+```
+
+Of the straight indviduals, the data suggest the people who took the AIDS preventive drug  38% contracted aids while 62% who took the placebo also contracted AIDS. 
+
+On the right side of the graph it shows  the straight individuals that to the AIDS preventive drug 50% did not contract AIDS, and those taking the placebo 55% did not contract AIDS. 
+We can conclude the drug is effective.
+#### Numerical Descriptive Results
+
+<!--Numerical results go here. Use the numerical results to describe the patterns if any that exist in the data as focused toward the research question!-->
+```{r}
+table1 <- xtabs(~infected + treatment, data=avasts)
+rowPerc(table1)
+colPerc(table1)
+```
+It states 37% of those who took the AIDS preventive drug contracted AIDS and while those who took the placebo 63% contracted AIDS.
+
+For those indivduals that didnt contract AIDS, the data is 50/50 for those taking the drug and placebo. There wasn't a significant difference. 
+### Inferential Results
+
+<!--State hypothesis clearly.  Make sure your discussion of the inferential test covers all the aspects that the test output produces, such as test statistic, p-value etc.  Make a decision about the null hypothesis, explain the assumptions on which the selected test/procedure was based, and why the chosen procedure satisfys the assumptions and is appropriate to answer the research question!-->
+```{r}
+chisq.test(table1)
+chisqtestGC(table1)
+```
+
+The drug is effective due to a large majority of indviduals that did not contract AIDS.
+
+Those infected: 451.49+478.51=930
+
+Those not infected:9056.51+9598.49=18,655
+
+Total effectivenss: 9056.51+451.49=9056/9508=95%
+
+Out of the total who took the drug results showed 95% effectivness.
+
+#  6. DrugUser
+
+<!--In this section you explain what you are trying to show.  Where did the data come from?  What is the research or other question you are trying to answer?!-->
+
+In question 6,  our goal is to determine how the AID preventive drug should be working with respect to each DrugUser.
+
+\(H_0\):There is no difference in the AID preventive drug that is independent to DrugUsers.
+
+\(H_A\):There is a statistical difference between AID preventive drug  and to those independent to DrugUsers.
+
+## Methods
+
+<!--Decide on your methods:  use "variable analysis" or other appropriate descriptors.  Make sure to choose at least one graphical method and at least one numerical method.!-->
+
+##Results
+
+<!--Divide this section into two sub-sections:  One for your descriptive  results and one for your inferential results.!-->
+
+We will be using both graphical descriptive and numerical descriptive results.
+
+### Descriptive Results
+
+
+#### Graphical Descriptive Results
+
+<!--Graphical results here.  Make sure to show your code.  Provide appropriate labels for axes, giving units if possible, and provide a good title for the graph, too.  Use the graphical results to describe the patterns if any that exist in the data as focused toward the research question!-->
+
+We use bar charts to compare Numerical vs Numerical data.
+
+```{r}
+barchartGC(~infected + treatment,data=avastd,type="percent")
+```
+
+The data shows of the DrugUsers taking the AID preventive drug 25% contracted AIDS and those taking the placebo 65% contracted AIDS. 
+
+On the left side of the graph it shows that data for the DrugUsers who did not contract AIDS while taking the Aids preventive drug and that was 45%, and those taking the placebo shows 55%. 
+#### Numerical Descriptive Results
+
+<!--Numerical results go here. Use the numerical results to describe the patterns if any that exist in the data as focused toward the research question!-->
+```{r}
+table1 <- xtabs(~infected + treatment, data=avastd)
+rowPerc(table1)
+colPerc(table1)
+```
+
+The drug is effective because for those taking the Aid preventive drug only 24.29% contracted AIDS, while those taking the placebo 76% contracted AIDS. The Aids preventive drug gives the individuals a higer chance of not contrcating AIDS. 
+### Inferential Results
+
+<!--State hypothesis clearly.  Make sure your discussion of the inferential test covers all the aspects that the test output produces, such as test statistic, p-value etc.  Make a decision about the null hypothesis, explain the assumptions on which the selected test/procedure was based, and why the chosen procedure satisfys the assumptions and is appropriate to answer the research question!-->
+```{r}
+chisq.test(table1)
+chisqtestGC(table1)
+```
+
+The drug is effective due to a large majority of individuals that did not contract AIDS.
+
+Those infected:64.82+75.18=140
+
+Those not infected:1112.18+1289.82=2401
+
+Total effectiveness: 1112.18+64.82=1112.18/1177=95%
+
+Out of the total who took the drug results showed 95% effectivness.
 
 # Discussion and Conclusion
 
 <!--Discussion and conclusion here.  If you found a relationship be sure to consider whether the relationship occurs because one of the variavbles causes the other, or whether they perhasps are related for some other reason.  Watch the chapter 6 videos from the GeorgeTown videos collection.!-->
+
+In conclusion to all 6 of the subgroups there is no relationship based on being female, male, gay, straight, and all the subgroups combined that causes one subgroup or the other that increases there odds of contracting AIDS. 
+
+All of the data presented suggested thatthe AIDS preventive drug was effective.
+
+Based on the chi-square statistics on all 6 of the subgroups, the AIDS preventive drug proved effective, ranging from 93-96% effective. 
+
+In conclusion the pill is reducing the odds of getting AIDS.
+
